@@ -18,13 +18,6 @@ def open_folder(directory):
         subprocess.Popen(['open', directory])
     else:
         subprocess.Popen(['xdg-open', directory])
-        
-def clean_ending_punctuation_and_inner_periods(text):
-    # Remove trailing punctuation
-    text = text.rstrip(' .,;:!?"')
-    # Replace periods with dashes
-    text = text.replace('.', '-')
-    return text
 
 def clean_filename(filename):
     invalid_chars = '<>:"/\|?*\n'
@@ -32,19 +25,9 @@ def clean_filename(filename):
         filename = filename.replace(c, '_')
     return filename
 
-def get_start_line():
-    while True:
-        start_line_input = input("Enter the line number in the CSV to start from (default is 1): ")
-        if not start_line_input:  # If user hits enter without typing anything
-            return 1
-        elif start_line_input.isdigit() and int(start_line_input) >= 1:
-            return int(start_line_input)
-        else:
-            print("Invalid input. Please enter a number greater than or equal to 1.")
-
 def process_topic_minutes_mood(csv_line_number, user_topic, user_minutes, user_mood, directory):
     # Parameters
-    min_chars = "21"
+    min_chars = "25"
 
     # Print topic heading
     print(f"Processing CSV line number: {csv_line_number}, Topic: {user_topic}, Mood: {user_mood}\n")
@@ -55,8 +38,7 @@ def process_topic_minutes_mood(csv_line_number, user_topic, user_minutes, user_m
     print(topic_summary)
 
     # Clean topic_summary and user_minutes for use in filename
-    clean_topic_punctuation_and_inner_periods = clean_ending_punctuation_and_inner_periods(topic_summary)
-    clean_user_topic = clean_filename(clean_topic_punctuation_and_inner_periods)
+    clean_user_topic = clean_filename(topic_summary)
     clean_user_minutes = clean_filename(user_minutes)
 
     # Get current date and time
@@ -64,7 +46,7 @@ def process_topic_minutes_mood(csv_line_number, user_topic, user_minutes, user_m
     timestamp = now.strftime('%y%m%d%H%M')
 
     # Create log file using user's preferred directory, user_topic, and current timestamp
-    filename = os.path.join(directory, f'{str(csv_line_number).zfill(3)}_{clean_user_topic}_{clean_user_minutes}mins_{timestamp}_ScriptIdeas.txt')
+    filename = os.path.join(directory, f'{clean_user_topic}_{clean_user_minutes}mins_{timestamp}_ScriptIdeas.txt')
     with open(filename, 'w', encoding='utf-8') as log_file:
         
         def print_and_log(message):
@@ -131,18 +113,10 @@ if user_topic == '':
     csvfile = filedialog.askopenfilename(filetypes=[("CSV files", "*.csv")])
     root.destroy()
 
-    start_line = get_start_line()
-
     with open(csvfile, newline='') as f:
         reader = csv.reader(f)
-        for _ in range(start_line):  # Skip the specified number of rows
-            try:
-                next(reader)
-            except StopIteration:  # There are less rows in the file than the start_line
-                print(f"The CSV file only has {start_line - 1} lines. Please check your data and start row and try again.")
-                exit(1)
-
-        csv_line_number = start_line
+        next(reader) # Skip header row
+        csv_line_number = 2  # initialize line number (considering header as line 1)
         for row in reader:
             user_topic, user_minutes, user_mood = row
             user_topic = user_topic.strip()
