@@ -1,0 +1,2 @@
+python chatGPT_Script_Gen_app.py
+pause

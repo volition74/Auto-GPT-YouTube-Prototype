@@ -1,10 +1,9 @@
-import chat_gpt_api as gpt
-import prompts as pr
-
+import chatGPT_Script_Gen_chat_gpt_api as gpt
+import chatGPT_Script_Gen_prompts as pr
 
 #step 1: Enter a Topic
-user_topic = input("Please enter your video topic: ")
-user_minutes = input("Please enter your video length (in minutes): ")
+user_topic = input("Enter your Video Topic?")
+user_minutes = input("Video Length?(minutes)")
 
 #step 2: Generate 10 Catchy Title Ideas
 titles_prompt = pr.youtube_title_generator_prompt.format(topic=user_topic)
@@ -13,7 +12,6 @@ print("Titles Ideas: ")
 print("----------------")
 print(titles)
 print("----------------")
-
 
 #step 3: Generate Catchy Thumbnail Ideas
 thumbnail_prompt = pr.youtube_thumbmail_generator_prompt.format(user_titles=titles)
@@ -30,8 +28,6 @@ print("Suggested Script: ")
 print("----------------")
 print(script)
 print("----------------")
-
-
 
 #step 5: Into a twitter thread
 tweet_prompt = pr.tweet_from_youtube_prompt.format(youtube_transcript=script)
