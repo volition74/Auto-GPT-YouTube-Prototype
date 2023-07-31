@@ -1,6 +1,6 @@
 import openai
 
-openai.api_key = "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"
+openai.api_key = "sk-yourkey"
 selected_model = "gpt-3.5-turbo"
 
 def basic_generation(user_prompt):

@@ -1,4 +1,4 @@
-import chatGPT_Script_Gen_chat_gpt_api as gpt
+import chat_gpt_api as gpt
 import chatGPT_Script_Gen_prompts as pr
 import tkinter as tk
 from tkinter import filedialog
