@@ -17,6 +17,3 @@ THE Topic IS: [{topic}]
 The mood and or Tone is: [{mood_tone}]"""
 
 tweet_from_youtube_prompt = """Act as if you're a social media expert. Give me a 10 tweet thread based on the follwing youtube transcript: {youtube_transcript}. The thread should be optimised for virality and contain hashtags and emoticons. Each tweet should not exceed 280 characters in length."""
-
-youtube_channel_Synopsis = """\
-Based on the information I have about this channel: {ch_desc}. This channel makes videos mainly in these genres, {ch_vid_genres}. I want you to act as a viral YouTube title creator with a {ch_tone} tone and {ch_style} style."""

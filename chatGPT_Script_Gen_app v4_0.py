@@ -90,8 +90,12 @@ def process_topic_minutes_mood(csv_line_number, user_topic, user_minutes, user_m
         print_and_log(f"Topic No#: {csv_line_number}, Topic: {user_topic}, Minutes: {user_minutes}, Mood: {user_mood}\n\n")
 
         # Generate 10 Catchy Title Ideas
-        channel_summary = pr.youtube_channel_Synopsis.format(ch_desc=channel_description, ch_tone=channel_tone, ch_style=channel_style, ch_vid_genres=channel_video_genres )
         titles_prompt = pr.youtube_title_generator_prompt.format(mood_tone=user_mood, topic=user_topic, ch_desc=channel_description, ch_tone=channel_tone, ch_style=channel_style, ch_vid_genres=channel_video_genres )
+        print("\n")
+        print("---------------------PROMPT-------------------------")
+        print(titles_prompt)
+        print("----------------------------------------------------")
+        print("\n")
         titles = gpt.basic_generation(titles_prompt)
         print_and_log("----------------")
         print_and_log("Titles Ideas: " + user_topic + " - Mood: " + user_mood + ", " + clean_user_minutes + "(minutes)")
@@ -101,10 +105,12 @@ def process_topic_minutes_mood(csv_line_number, user_topic, user_minutes, user_m
 
         # Generate Catchy Thumbnail Ideas
         thumbnail_prompt = pr.youtube_thumbmail_generator_prompt.format(mood_tone=user_mood, user_titles=titles)
-        print("-------------------PROMPT---------------------")
-        print(channel_summary + "\n" + thumbnail_prompt)
-        print("-------------------++++++++---------------------\n")
-        thumbnails = gpt.basic_generation(channel_summary + "\n" + thumbnail_prompt)
+        print("\n")
+        print("---------------------PROMPT-------------------------")
+        print(thumbnail_prompt)
+        print("----------------------------------------------------")
+        print("\n")
+        thumbnails = gpt.basic_generation(thumbnail_prompt)
         print_and_log("----------------")
         print_and_log("Thumbnail Ideas: " + user_topic + " - Mood: " + user_mood + ", " + clean_user_minutes + "(minutes)")
         print_and_log("----------------")
@@ -113,7 +119,12 @@ def process_topic_minutes_mood(csv_line_number, user_topic, user_minutes, user_m
 
         # script
         script_prompt = pr.youtube_script_generator_prompt.format(minutes=user_minutes, topic=user_topic, mood_tone=user_mood)
-        script = gpt.basic_generation(channel_summary + "\n" + script_prompt)
+        print("\n")
+        print("---------------------PROMPT-------------------------")
+        print(script_prompt)
+        print("----------------------------------------------------")
+        print("\n")
+        script = gpt.basic_generation(script_prompt)
         print_and_log("----------------")
         print_and_log("Suggested Script: " + user_topic + " - Mood: " + user_mood + ", " + clean_user_minutes + "(minutes)")
         print_and_log("----------------")
@@ -122,7 +133,12 @@ def process_topic_minutes_mood(csv_line_number, user_topic, user_minutes, user_m
 
         # Into a twitter thread
         tweet_prompt = pr.tweet_from_youtube_prompt.format(youtube_transcript=script)
-        tweet = gpt.basic_generation(channel_summary + "\n" + tweet_prompt)
+        print("\n")
+        print("---------------------PROMPT-------------------------")
+        print(tweet_prompt)
+        print("----------------------------------------------------")
+        print("\n")
+        tweet = gpt.basic_generation(tweet_prompt)
         print_and_log("----------------")
         print_and_log("Twitter Thread: " + user_topic + " - Mood: " + user_mood + ", " + clean_user_minutes + "(minutes)")
         print_and_log("----------------")

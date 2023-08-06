@@ -101,9 +101,6 @@ def process_topic_minutes_mood(csv_line_number, user_topic, user_minutes, user_m
 
         # Generate Catchy Thumbnail Ideas
         thumbnail_prompt = pr.youtube_thumbmail_generator_prompt.format(mood_tone=user_mood, user_titles=titles)
-        print("-------------------PROMPT---------------------")
-        print(channel_summary + "\n" + thumbnail_prompt)
-        print("-------------------++++++++---------------------\n")
         thumbnails = gpt.basic_generation(channel_summary + "\n" + thumbnail_prompt)
         print_and_log("----------------")
         print_and_log("Thumbnail Ideas: " + user_topic + " - Mood: " + user_mood + ", " + clean_user_minutes + "(minutes)")
