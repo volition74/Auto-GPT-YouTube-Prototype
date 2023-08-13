@@ -56,10 +56,10 @@ def get_channel_choice():
         except (KeyError, ValueError):
             print("Invalid choice. Please enter a number 1, 2, or 3.")
 
-def process_topic_minutes_mood(csv_line_number, user_topic, user_minutes, user_mood, channel, channel_description, channel_tone, channel_style, channel_video_genres, directory, chat_GPT_model_num):
+def process_topic_minutes_mood(csv_line_number, user_topic, user_minutes, user_mood, channel, channel_description, channel_tone, channel_style, channel_video_genres, directory):
     # Parameters
     min_chars = "21"
-    selected_model = gpt.set_model_by_choice(chat_GPT_model_num)
+    selected_model = gpt.set_model_by_choice(1)
 
     # Print topic heading
     print(f"Processing CSV line number: {csv_line_number}, Topic: {user_topic}, Mood: {user_mood}\n")
@@ -85,15 +85,9 @@ def process_topic_minutes_mood(csv_line_number, user_topic, user_minutes, user_m
         def print_and_log(message):
             print(message)
             log_file.write(message + '\n')
-            
-        # Fetch model details to log and print
-        model_details = gpt.MODEL_DETAILS[chat_GPT_model_num]
-        model_name = model_details["name"]
-        token_limit = model_details["tokens"]
-        print_and_log(f"Using Model: {model_name} with Token Limit: {token_limit}\n")
-        
+
         # Print CSV line number, topic, minutes and mood at the top of the log file
-        print_and_log(f"--------------------CHANNEL  --  {channel} ------------------------------\n")
+        print_and_log(f"------------------------ {channel} ------------------------------\n")
         print_and_log(f"Topic No#: {csv_line_number}, Topic: {user_topic}, Minutes: {user_minutes}, Mood: {user_mood}\n\n")
 
         # Generate 10 Catchy Title Ideas
@@ -110,9 +104,8 @@ def process_topic_minutes_mood(csv_line_number, user_topic, user_minutes, user_m
         thumbnail_prompt = pr.youtube_thumbmail_generator_prompt.format(mood_tone=user_mood, user_titles=titles)
         print_and_log("-------------------General PROMPT---------------------")
         print_and_log(channel_summary + "\n" + "\n")
-        print_and_log("the Title Ideas generated above are also injected into this prompt\n")
+        print_and_log(thumbnail_prompt + "\n")
         print_and_log("-------------------++++++++---------------------\n")
-        
         thumbnails = gpt.basic_generation(channel_summary + "\n" + thumbnail_prompt, selected_model)
         print_and_log("----------------")
         print_and_log("Thumbnail Ideas: " + user_topic + " - Mood: " + user_mood + ", " + clean_user_minutes + "(minutes)")
@@ -178,7 +171,7 @@ if user_topic == '':
             channel_style = ch.channel_info[channel]['style']
             channel_video_genres = ch.channel_info[channel]['video genres']
 
-            process_topic_minutes_mood(csv_line_number, user_topic, user_minutes, user_mood, channel, channel_description, channel_tone, channel_style, channel_video_genres, directory, 1)
+            process_topic_minutes_mood(csv_line_number, user_topic, user_minutes, user_mood, channel, channel_description, channel_tone, channel_style, channel_video_genres, directory)
             csv_line_number += 1  # increment line number
 else:
     user_minutes = input("Video Length?(minutes)").strip()
@@ -189,7 +182,7 @@ else:
     channel_tone = ch.channel_info[channel]['tone']
     channel_style = ch.channel_info[channel]['style']
     channel_video_genres = ch.channel_info[channel]['video genres']
-    process_topic_minutes_mood(user_topic, user_minutes, user_mood, channel, channel_description, channel_tone, channel_style, channel_video_genres, directory, 1)
+    process_topic_minutes_mood(user_topic, user_minutes, user_mood, channel, channel_description, channel_tone, channel_style, channel_video_genres, directory)
 
 # Call the function at the end of the script
 open_folder(directory)

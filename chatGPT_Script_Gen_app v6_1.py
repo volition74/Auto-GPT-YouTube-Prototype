@@ -85,15 +85,9 @@ def process_topic_minutes_mood(csv_line_number, user_topic, user_minutes, user_m
         def print_and_log(message):
             print(message)
             log_file.write(message + '\n')
-            
-        # Fetch model details to log and print
-        model_details = gpt.MODEL_DETAILS[chat_GPT_model_num]
-        model_name = model_details["name"]
-        token_limit = model_details["tokens"]
-        print_and_log(f"Using Model: {model_name} with Token Limit: {token_limit}\n")
-        
+
         # Print CSV line number, topic, minutes and mood at the top of the log file
-        print_and_log(f"--------------------CHANNEL  --  {channel} ------------------------------\n")
+        print_and_log(f"------------------------ {channel} ------------------------------\n")
         print_and_log(f"Topic No#: {csv_line_number}, Topic: {user_topic}, Minutes: {user_minutes}, Mood: {user_mood}\n\n")
 
         # Generate 10 Catchy Title Ideas

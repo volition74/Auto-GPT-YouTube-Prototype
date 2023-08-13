@@ -93,7 +93,7 @@ def process_topic_minutes_mood(csv_line_number, user_topic, user_minutes, user_m
         print_and_log(f"Using Model: {model_name} with Token Limit: {token_limit}\n")
         
         # Print CSV line number, topic, minutes and mood at the top of the log file
-        print_and_log(f"--------------------CHANNEL  --  {channel} ------------------------------\n")
+        print_and_log(f"----------------------  CHANNEL  -- {channel} ------------------------------\n")
         print_and_log(f"Topic No#: {csv_line_number}, Topic: {user_topic}, Minutes: {user_minutes}, Mood: {user_mood}\n\n")
 
         # Generate 10 Catchy Title Ideas
